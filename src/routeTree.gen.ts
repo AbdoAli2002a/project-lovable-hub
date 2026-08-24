@@ -10,33 +10,53 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as RectangleRouteImport } from './routes/rectangle'
+import { Route as RhombusRouteImport } from './routes/rhombus'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const RectangleRoute = RectangleRouteImport.update({
+  id: '/rectangle',
+  path: '/rectangle',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const RhombusRoute = RhombusRouteImport.update({
+  id: '/rhombus',
+  path: '/rhombus',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/rectangle': typeof RectangleRoute
+  '/rhombus': typeof RhombusRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/rectangle': typeof RectangleRoute
+  '/rhombus': typeof RhombusRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/rectangle': typeof RectangleRoute
+  '/rhombus': typeof RhombusRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/rectangle' | '/rhombus'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/rectangle' | '/rhombus'
+  id: '__root__' | '/' | '/rectangle' | '/rhombus'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  RectangleRoute: typeof RectangleRoute
+  RhombusRoute: typeof RhombusRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +68,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/rectangle': {
+      id: '/rectangle'
+      path: '/rectangle'
+      fullPath: '/rectangle'
+      preLoaderRoute: typeof RectangleRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/rhombus': {
+      id: '/rhombus'
+      path: '/rhombus'
+      fullPath: '/rhombus'
+      preLoaderRoute: typeof RhombusRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  RectangleRoute: RectangleRoute,
+  RhombusRoute: RhombusRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
