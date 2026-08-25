@@ -10,12 +10,25 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ConditionsRouteImport } from './routes/conditions'
+import { Route as ExamplesRouteImport } from './routes/examples'
 import { Route as RectangleRouteImport } from './routes/rectangle'
 import { Route as RhombusRouteImport } from './routes/rhombus'
+import { Route as SquareRouteImport } from './routes/square'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConditionsRoute = ConditionsRouteImport.update({
+  id: '/conditions',
+  path: '/conditions',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ExamplesRoute = ExamplesRouteImport.update({
+  id: '/examples',
+  path: '/examples',
   getParentRoute: () => rootRouteImport,
 } as any)
 const RectangleRoute = RectangleRouteImport.update({
@@ -28,35 +41,60 @@ const RhombusRoute = RhombusRouteImport.update({
   path: '/rhombus',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SquareRoute = SquareRouteImport.update({
+  id: '/square',
+  path: '/square',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/conditions': typeof ConditionsRoute
+  '/examples': typeof ExamplesRoute
   '/rectangle': typeof RectangleRoute
   '/rhombus': typeof RhombusRoute
+  '/square': typeof SquareRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/conditions': typeof ConditionsRoute
+  '/examples': typeof ExamplesRoute
   '/rectangle': typeof RectangleRoute
   '/rhombus': typeof RhombusRoute
+  '/square': typeof SquareRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/conditions': typeof ConditionsRoute
+  '/examples': typeof ExamplesRoute
   '/rectangle': typeof RectangleRoute
   '/rhombus': typeof RhombusRoute
+  '/square': typeof SquareRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/rectangle' | '/rhombus'
+  fullPaths:
+    '/' | '/conditions' | '/examples' | '/rectangle' | '/rhombus' | '/square'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/rectangle' | '/rhombus'
-  id: '__root__' | '/' | '/rectangle' | '/rhombus'
+  to: '/' | '/conditions' | '/examples' | '/rectangle' | '/rhombus' | '/square'
+  id:
+    | '__root__'
+    | '/'
+    | '/conditions'
+    | '/examples'
+    | '/rectangle'
+    | '/rhombus'
+    | '/square'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ConditionsRoute: typeof ConditionsRoute
+  ExamplesRoute: typeof ExamplesRoute
   RectangleRoute: typeof RectangleRoute
   RhombusRoute: typeof RhombusRoute
+  SquareRoute: typeof SquareRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -66,6 +104,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/conditions': {
+      id: '/conditions'
+      path: '/conditions'
+      fullPath: '/conditions'
+      preLoaderRoute: typeof ConditionsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/examples': {
+      id: '/examples'
+      path: '/examples'
+      fullPath: '/examples'
+      preLoaderRoute: typeof ExamplesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/rectangle': {
@@ -82,13 +134,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof RhombusRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/square': {
+      id: '/square'
+      path: '/square'
+      fullPath: '/square'
+      preLoaderRoute: typeof SquareRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ConditionsRoute: ConditionsRoute,
+  ExamplesRoute: ExamplesRoute,
   RectangleRoute: RectangleRoute,
   RhombusRoute: RhombusRoute,
+  SquareRoute: SquareRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
