@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as ActivitiesRouteImport } from './routes/activities'
 import { Route as ConditionsRouteImport } from './routes/conditions'
 import { Route as ExamplesRouteImport } from './routes/examples'
 import { Route as RectangleRouteImport } from './routes/rectangle'
@@ -19,6 +20,11 @@ import { Route as SquareRouteImport } from './routes/square'
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ActivitiesRoute = ActivitiesRouteImport.update({
+  id: '/activities',
+  path: '/activities',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ConditionsRoute = ConditionsRouteImport.update({
@@ -49,6 +55,7 @@ const SquareRoute = SquareRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/activities': typeof ActivitiesRoute
   '/conditions': typeof ConditionsRoute
   '/examples': typeof ExamplesRoute
   '/rectangle': typeof RectangleRoute
@@ -57,6 +64,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/activities': typeof ActivitiesRoute
   '/conditions': typeof ConditionsRoute
   '/examples': typeof ExamplesRoute
   '/rectangle': typeof RectangleRoute
@@ -66,6 +74,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/activities': typeof ActivitiesRoute
   '/conditions': typeof ConditionsRoute
   '/examples': typeof ExamplesRoute
   '/rectangle': typeof RectangleRoute
@@ -75,12 +84,26 @@ export interface FileRoutesById {
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
-    '/' | '/conditions' | '/examples' | '/rectangle' | '/rhombus' | '/square'
+    | '/'
+    | '/activities'
+    | '/conditions'
+    | '/examples'
+    | '/rectangle'
+    | '/rhombus'
+    | '/square'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/conditions' | '/examples' | '/rectangle' | '/rhombus' | '/square'
+  to:
+    | '/'
+    | '/activities'
+    | '/conditions'
+    | '/examples'
+    | '/rectangle'
+    | '/rhombus'
+    | '/square'
   id:
     | '__root__'
     | '/'
+    | '/activities'
     | '/conditions'
     | '/examples'
     | '/rectangle'
@@ -90,6 +113,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ActivitiesRoute: typeof ActivitiesRoute
   ConditionsRoute: typeof ConditionsRoute
   ExamplesRoute: typeof ExamplesRoute
   RectangleRoute: typeof RectangleRoute
@@ -104,6 +128,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/activities': {
+      id: '/activities'
+      path: '/activities'
+      fullPath: '/activities'
+      preLoaderRoute: typeof ActivitiesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/conditions': {
@@ -146,6 +177,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ActivitiesRoute: ActivitiesRoute,
   ConditionsRoute: ConditionsRoute,
   ExamplesRoute: ExamplesRoute,
   RectangleRoute: RectangleRoute,
